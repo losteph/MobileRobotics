@@ -1,0 +1,27 @@
+FROM osrf/ros:jazzy-desktop
+
+# Unico blocco RUN per ottimizzare i layer dell'immagine
+RUN apt-get update -y && apt-get install -y \
+    nano \
+    iputils-ping \
+    python3-pip \
+    wget \
+    ros-jazzy-ros-gz \
+    ros-jazzy-ros-gz-bridge \
+    ros-jazzy-ros-gz-sim \
+    ros-jazzy-ros-gz-interfaces \
+    ros-jazzy-xacro \
+    ros-jazzy-joint-state-publisher-gui \
+    ros-jazzy-urdf-tutorial \
+    liburdfdom-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+# I passaggi successivi possiamo ometterli (come ho fatto ora, per poi eseguire manualmente i passaggi fatti a lezione)
+# oppure possiamo scommentare quelle righe e quando buildiamo siamo già pronti a lavorare
+
+# Aggiungiamo i source automatici per quando apriamo il terminale
+#RUN echo "source /opt/ros/jazzy/setup.bash" >> /root/.bashrc && \
+#    echo "alias cw='cd /root/ros_workspace'" >> /root/.bashrc
+
+# Impostiamo la directory di lavoro
+#WORKDIR /root/ros_workspace
