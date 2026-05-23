@@ -1,2 +1,3 @@
 # MobileRobotics
-Little project for the exam "Robotics" at PoliBa.
+
+Da modificare a progetto finito
