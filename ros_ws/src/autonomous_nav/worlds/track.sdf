@@ -1,0 +1,126 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+  <world name="exam_track">
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+    
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+    
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision"><geometry><plane><normal>0 0 1</normal></plane></geometry></collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+          <material><ambient>0.4 0.4 0.4 1</ambient><diffuse>0.4 0.4 0.4 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="outer_walls">
+      <static>true</static>
+      <link name="link">
+        <visual name="v_s"><pose>15 0 0.5 0 0 0</pose><geometry><box><size>30.2 0.2 1</size></box></geometry></visual>
+        <collision name="c_s"><pose>15 0 0.5 0 0 0</pose><geometry><box><size>30.2 0.2 1</size></box></geometry></collision>
+        <visual name="v_n"><pose>15 30 0.5 0 0 0</pose><geometry><box><size>30.2 0.2 1</size></box></geometry></visual>
+        <collision name="c_n"><pose>15 30 0.5 0 0 0</pose><geometry><box><size>30.2 0.2 1</size></box></geometry></collision>
+        <visual name="v_w"><pose>0 15 0.5 0 0 1.57079</pose><geometry><box><size>30.2 0.2 1</size></box></geometry></visual>
+        <collision name="c_w"><pose>0 15 0.5 0 0 1.57079</pose><geometry><box><size>30.2 0.2 1</size></box></geometry></collision>
+        <visual name="v_e"><pose>30 15 0.5 0 0 1.57079</pose><geometry><box><size>30.2 0.2 1</size></box></geometry></visual>
+        <collision name="c_e"><pose>30 15 0.5 0 0 1.57079</pose><geometry><box><size>30.2 0.2 1</size></box></geometry></collision>
+      </link>
+    </model>
+
+    <model name="inner_walls">
+      <static>true</static>
+      <link name="link">
+        <visual name="v_s_in"><pose>15 4 0.5 0 0 0</pose><geometry><box><size>22 0.2 1</size></box></geometry></visual>
+        <collision name="c_s_in"><pose>15 4 0.5 0 0 0</pose><geometry><box><size>22 0.2 1</size></box></geometry></collision>
+        <visual name="v_n_in"><pose>15 26 0.5 0 0 0</pose><geometry><box><size>22 0.2 1</size></box></geometry></visual>
+        <collision name="c_n_in"><pose>15 26 0.5 0 0 0</pose><geometry><box><size>22 0.2 1</size></box></geometry></collision>
+        <visual name="v_w_in"><pose>4 15 0.5 0 0 1.57079</pose><geometry><box><size>22 0.2 1</size></box></geometry></visual>
+        <collision name="c_w_in"><pose>4 15 0.5 0 0 1.57079</pose><geometry><box><size>22 0.2 1</size></box></geometry></collision>
+        <visual name="v_e_in"><pose>26 15 0.5 0 0 1.57079</pose><geometry><box><size>22 0.2 1</size></box></geometry></visual>
+        <collision name="c_e_in"><pose>26 15 0.5 0 0 1.57079</pose><geometry><box><size>22 0.2 1</size></box></geometry></collision>
+      </link>
+    </model>
+
+    <model name="car_east_1">
+      <static>true</static>
+      <pose>27 10 0.5 0 0 1.57079</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>2 1 1</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>2 1 1</size></box></geometry><material><ambient>0.8 0 0 1</ambient><diffuse>0.8 0 0 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="car_east_2">
+      <static>true</static>
+      <pose>27 20 0.5 0 0 1.57079</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>2 1 1</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>2 1 1</size></box></geometry><material><ambient>0.8 0 0 1</ambient><diffuse>0.8 0 0 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <model name="car_north_1">
+      <static>true</static>
+      <pose>20 29 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>2 1 1</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>2 1 1</size></box></geometry><material><ambient>0.8 0 0 1</ambient><diffuse>0.8 0 0 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="car_north_2">
+      <static>true</static>
+      <pose>10 29 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>2 1 1</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>2 1 1</size></box></geometry><material><ambient>0.8 0 0 1</ambient><diffuse>0.8 0 0 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <model name="car_west_slalom_1">
+      <static>true</static>
+      <pose>1 22 0.5 0 0 1.57079</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>2 1 1</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>2 1 1</size></box></geometry><material><ambient>0.8 0 0 1</ambient><diffuse>0.8 0 0 1</diffuse></material></visual>
+      </link>
+    </model>
+    
+    <model name="car_west_slalom_2">
+      <static>true</static>
+      <pose>3 16 0.5 0 0 1.57079</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>2 1 1</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>2 1 1</size></box></geometry><material><ambient>0.8 0 0 1</ambient><diffuse>0.8 0 0 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <model name="bottleneck_left">
+      <static>true</static>
+      <pose>0.5 8 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>1 3 1</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>1 3 1</size></box></geometry><material><ambient>0.9 0.5 0 1</ambient><diffuse>0.9 0.5 0 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="bottleneck_right">
+      <static>true</static>
+      <pose>3.5 8 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>1 3 1</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>1 3 1</size></box></geometry><material><ambient>0.9 0.5 0 1</ambient><diffuse>0.9 0.5 0 1</diffuse></material></visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>
