@@ -1,7 +1,7 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
+from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 from launch.substitutions import Command
@@ -36,7 +36,7 @@ def generate_launch_description():
     spawn_node = Node(
         package='ros_gz_sim',
         executable='create',
-        arguments=['-topic', 'robot_description', '-name', 'my_custom_bot', '-x', '2.0', '-y', '2.0', '-z', '0.2'],
+        arguments=['-topic', 'robot_description', '-name', 'my_custom_bot', '-x', '2.0', '-y', '0.75', '-z', '0.2'],
         output='screen'
     )
     # 5. Il Ponte Magico (Fa comunicare i topic di ROS 2 con Gazebo)
