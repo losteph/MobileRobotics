@@ -31,9 +31,26 @@ Il robot è testato su una mappa `.sdf` creata provando a stressare il controllo
 
 ---
 
-## Istruzioni di Installazione e Compilazione
+## Istruzioni
 
-... finisco di compilare questa parte dopo ..
+Per Windows11 con WSL2, dopo aver aperto la cartella del progetto su VSCode ed aver aperto il terminale (trasformandolo da powershell in linux digitando all'interno `wsl`) possiamo iniziare la simulazione.
+
+* Avviamo (un container docker, l'immagine docker con ros2? da rivedere) digitando `./run.sh` sul terminale
+* (Se non funziona è perché non sono abilitati i permessi di esecuzione al file, aggiungerli così: `chmod +x *.sh` (il * serve a dare i permessi a tutti i file .sh nella directory corrente, senza doverlo rifare per ogni nome)
+* ((Prima devo spiegare il build del dlockerfile, poi da aggiungere sopra dopo) `cd docker_ws` -> `./build.sh`), se non va disabilità il BuildKit e riprova `export DOCKER_BUILDKIT=0`)))
+* `cd root/ros_workspace`
+* `colcon build`
+* `source install/setup.bash`
+* `ros2 launch autonomous_nav display_launch.py` Per il debugging visivo del robot (apre rviz)
+* `ros2 launch autonomous_nav simulation_launch.py` Apre la mappa gazebo e posiziona il robot allo start, ma sta fermo, si può guidare manualmente aprendo `./exec.sh` su un altro terminale e digitando poi `ros2 run teleop_twist_keyboard teleop_twist_keyboard` (con la "i" si va avanti, con "k" si frena, con la "u" gira a sinistra andando avanti, con "j" gira sul posto a sinistra, con "o" gira a destra andando avanti, con "l" gira a destra sul posto)
+
+Debug
+* `ros2 topic list` Vedere la lista di tutti i canali di comunicazione attivi
+* `ros2 topic echo /scan` Leggere in diretta i dati del sensore
+* ros2 topic hz /scan (Vedere la frequenza di pubblicazone (messaggi al secondo madati dal LiDAR)
+* ros2 topic echo /cmd_vel (Leggere i comandi inviati ai motori dal Controllore
+
+Da migliorare, correggere, finire
 
 ---
 
