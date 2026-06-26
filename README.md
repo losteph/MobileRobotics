@@ -40,11 +40,21 @@ Il robot è testato su una mappa `.sdf` creata provando a stressare il controllo
 ## Struttura Repo
 
 ```
-|- docker_ws
-|- ros_ws
-|- report.pdf (da creare aggiungere dopo)
-|- run.sh
-|- exec.sh
+📦 MobileRobotics
+ ┣ 📂 docker_ws/
+ ┃ ┣ 📄 Dockerfile.project
+ ┃ ┗ 📄 build.sh
+ ┣ 📂 ros_ws/
+ ┃ ┣ 📂 scr/
+ ┃ ┃ ┃ ┣ 📂 autonomous_nav/
+ ┃ ┃ ┃ ┃ ┣ 📂 autonomous_nav/
+ ┃ ┃ ┃ ┃ ┣ 📂 launch
+ ┃ ┃ ┃ ┃ ┗ 📂 da finire..
+ ┣ 📄 README.md
+ ┣ 📄 chown_me.sh
+ ┣ 📄 exec.sh
+ ┣ 📄 run.sh
+ ┗ 📄 Report.pdf (ancora da creare) 
 (bozza, da migliorare dopo)
 ```
 
