@@ -24,8 +24,8 @@ class PerceptionNode(Node):
         front_dist = min(front_rays)
 
         # 2. Distanze laterali (raggi a 45°, perché a 90° non andava bene si scontrava non riusciva a guardare bene avanti)
-        right_dist = msg.ranges[45]  
-        left_dist = msg.ranges[135]
+        right_dist = msg.ranges[40:50]  
+        left_dist = msg.ranges[130:140]
 
         # Se il laser non vede il muro (es. infinito), limitiamo a un valore massimo
         if math.isinf(left_dist): left_dist = 2.0
