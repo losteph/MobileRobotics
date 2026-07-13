@@ -20,28 +20,23 @@ class PerceptionNode(Node):
         # Il LiDAR ha 180 campioni (da -90° a +90°)
         
         # 1. Distanza frontale (media dei 10 gradi centrali: indici da 85 a 95)
-        front_rays = msg.ranges[85:95] 
+        front_rays = msg.ranges[80:100] 
         front_dist = min(front_rays)
 
         # 2. Distanze laterali (raggi a 45°, perché a 90° non andava bene si scontrava non riusciva a guardare bene avanti)
-        right_dist = min(msg.ranges[40:50])  
-        left_dist = min(msg.ranges[130:140])
+        right_dist = min(msg.ranges[20:60])  
+        left_dist = min(msg.ranges[120:160])
 
         # Se il laser non vede il muro (es. infinito), limitiamo a un valore massimo
         if math.isinf(left_dist): left_dist = 2.0
         if math.isinf(right_dist): right_dist = 2.0
 
-        # 3. Calcolo errore laterale
-        # Se left_dist = right_dist, l'errore è 0 (siamo in centro).
-        # Se siamo troppo a destra, left_dist è grande, right_dist è piccolo -> errore positivo
-        error_y = left_dist - right_dist
-
         # Creiamo il messaggio e pubblichiamo
         out_msg = Vector3()
         out_msg.x = float(front_dist)
-        out_msg.y = float(error_y)
-        out_msg.z = 0.0 # Non lo usiamo
-
+        out_msg.y = float(left_dist)
+        out_msg.z = float(right_dist)
+        # Inviamo i dati grezzi filtrati al controllore.
         self.pub.publish(out_msg)
 
 def main(args=None):

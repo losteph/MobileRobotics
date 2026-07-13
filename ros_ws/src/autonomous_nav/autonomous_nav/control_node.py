@@ -15,25 +15,83 @@ class ControlNode(Node):
         
         # Parametri della I/O Linearization
         self.b = 0.15      # Distanza del punto B (dove sta il LiDAR) dal centro ruote (in metri)
-        self.kp = 0.5      # Guadagno Proporzionale (quanto sterza bruscamente)
-        self.v_max = 0.6   # Velocità di crociera (m/s)
+        self.v_max = 0.4   # Velocità di crociera (m/s)
+
+        
+        self.kp = 0.4      # Guadagno Proporzionale (quanto sterza bruscamente, reattività)
+        self.ki = 0.05      # Guadagno Integrale (correzione di piccoli errori a regime)
+        self.kd = 0.2      # Guadagno Derivativo (smorzamento per evitare effetto zig-zag)
+        
+
+        # Memoria per il calcolo Integrale e Derivativo
+        self.integral_error = 0.0 
+        self.prev_error = 0.0
 
     def perception_callback(self, msg):
         front_dist = msg.x
-        error_y = msg.y
+        left_dist = msg.y
+        right_dist = msg.z
+
+
+        # Errore naturale (se siamo perfettamente al centro, left - right = 0)
+        error_y_base = left_dist - right_dist
+
+
+        target_offset = 0.0 # Di base vogliamo stare in centro
+        u_x = self.v_max #velocità in avanti
+        state = "LANE_FOLLOWING"
+
+
 
         # ---
-        # 1. Calcolo Ingressi Virtuali (u_x, u_y)
-        
-        # Velocità in avanti (u_x)
-        if front_dist < 1.0:
-            u_x = 0.0 # Frena di colpo se l'ostacolo è a meno di 1 metro!
-            self.get_logger().warn("Ostacolo rilevato!")
-        else:
-            u_x = self.v_max # Va avanti normalmente
+        # FSM (macchina a stati finiti) per sorpasso e frenata
 
-        # Correzione laterale (u_y) tramite legge proporzionale
-        u_y = self.kp * error_y
+        # Se l'ostacolo è troppo vicino, inchioda per sicurezza
+        if front_dist < 0.25:
+            state = "EMERGENCY_STOP"
+            u_x = 0.0
+            self.get_logger().warn("Frenata di emergenza! Ostacolo a meno di 0.5m rilevato")
+        # Se l'ostacolo è in zona di guardia, valutiamo il sorpasso
+        elif front_dist < 1.2:
+        
+            if (left_dist - right_dist) > 0.3:
+                state = "OVERTAKE_LEFT"
+                target_offset = 0.6  # Spostiamo il centro ideale verso sinistra
+                
+         
+            elif (right_dist - left_dist) > 0.3:
+                state = "OVERTAKE_RIGHT"
+                target_offset = -0.6 # Spostiamo il centro ideale verso destra
+                
+            else:
+                state = "NARROW_PASSAGE" 
+                u_x = 0.2
+                target_offset = 0.0
+
+        # ---
+        # Controllore PID
+
+        # L'errore effettivo che il PID deve annullare (tiene conto di eventuali sorpassi)
+        e = error_y_base - target_offset
+            
+        # Calcolo Derivativo (velocità di variazione dell'errore)
+        derivative = e - self.prev_error
+            
+        # Calcolo Integrale (accumulo dell'errore)
+        self.integral_error += e
+            
+        # Anti-windup per il termine integrale (evita che esploda se ci incastriamo)
+        if self.integral_error > 50.0: self.integral_error = 50.0
+        if self.integral_error < -50.0: self.integral_error = -50.0
+
+        # Equazione del PID completa
+        u_y = (self.kp * e) + (self.ki * self.integral_error) + (self.kd * derivative)
+
+        # Salviamo l'errore per il prossimo ciclo
+        self.prev_error = e
+        if state == "EMERGENCY_STOP" and abs(e) < 0.05:
+            self.integral_error = 0.0 
+
 
         # ---
         # 2. Matrice di Disaccoppiamento 
