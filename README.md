@@ -56,6 +56,11 @@ Debug
 * `ros2 topic hz /scan` Verifica la frequenza di aggiornamento del LiDAR (messaggi inviati al secondo)
 * `ros2 topic echo /cmd_vel` Mostra le velocità lineari e angolari calcolate dal controllore e inviate ai motori.
 
+Grafici
+* `rqt_graph`
+* `ros2 run rqt_plot rqt_plot`
+* `ros2 run tf2_tools view_frames`
+
 ---
 
 ## Struttura Repo
