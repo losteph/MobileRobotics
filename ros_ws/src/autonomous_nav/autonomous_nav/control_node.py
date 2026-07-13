@@ -47,10 +47,9 @@ class ControlNode(Node):
         # FSM (macchina a stati finiti) per sorpasso e frenata
 
         # Se l'ostacolo è troppo vicino, inchioda per sicurezza
-        if front_dist < 0.25:
+        if front_dist < 0.3:
             state = "EMERGENCY_STOP"
             u_x = 0.0
-            self.get_logger().warn("Frenata di emergenza! Ostacolo a meno di 0.5m rilevato")
         # Se l'ostacolo è in zona di guardia, valutiamo il sorpasso
         elif front_dist < 1.2:
         
