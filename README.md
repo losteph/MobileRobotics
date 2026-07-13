@@ -72,16 +72,12 @@ Grafici
  ┃ ┗ 📄 build.sh
  ┣ 📂 ros_ws/
  ┃ ┣ 📂 scr/
- ┃ ┃ ┃ ┣ 📂 autonomous_nav/
- ┃ ┃ ┃ ┃ ┣ 📂 autonomous_nav/
- ┃ ┃ ┃ ┃ ┣ 📂 launch
- ┃ ┃ ┃ ┃ ┗ 📂 da finire..
+ ┃ ┃ ┃ ┗ 📂 autonomous_nav/  # (cartella contenente il pkg, launch file, modello urdf del robot, mappe, nodi di controllo e percezione, etc...)
  ┣ 📄 README.md
  ┣ 📄 chown_me.sh
  ┣ 📄 exec.sh
  ┣ 📄 run.sh
- ┗ 📄 Report.pdf (ancora da creare) 
-(bozza, da migliorare dopo)
+ ┗ 📄 Report.pdf 
 ```
 
 ---
