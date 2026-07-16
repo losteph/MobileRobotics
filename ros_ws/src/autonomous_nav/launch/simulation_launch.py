@@ -12,7 +12,7 @@ def generate_launch_description():
 
     # Percorsi dei file
     world_file = os.path.join(pkg_autonomous_nav, 'worlds', 'track.sdf')
-    urdf_file = os.path.join(pkg_autonomous_nav, 'urdf', 'robot.urdf.xacro')
+    urdf_file = os.path.join(pkg_autonomous_nav, 'urdf', 'robot.urdf')
 
     robot_desc = ParameterValue(Command(['xacro ', urdf_file]), value_type=str)     # (xacro per convertire il file in stringa XML)
 
