@@ -7,7 +7,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 def generate_launch_description():
     my_pkg_path = get_package_share_directory('autonomous_nav')
     
-    my_urdf_file = os.path.join(my_pkg_path, 'urdf', 'robot.urdf.xacro')
+    my_urdf_file = os.path.join(my_pkg_path, 'urdf', 'robot.urdf')
     
     urdf_tutorial_path = get_package_share_directory('urdf_tutorial')
     
