@@ -19,7 +19,7 @@ class ControlNode(Node):
 
         
         self.kp = 0.4      # Guadagno Proporzionale (quanto sterza bruscamente, reattività)
-        self.ki = 0.0      # Guadagno Integrale (correzione di piccoli errori a regime)
+        self.ki = 0.01      # Guadagno Integrale (correzione di piccoli errori a regime)
         self.kd = 0.07      # Guadagno Derivativo (smorzamento per evitare effetto zig-zag)
         
 
@@ -79,9 +79,14 @@ class ControlNode(Node):
         # Calcolo Integrale (accumulo dell'errore)
         self.integral_error += e
             
+        # Calcolo dinamico dell'Anti-Windup
+        self.u_y_max = 1.5 * self.b #u_y_max = omega_max * b
+        self.antiwindup = self.u_y_max / self.ki
+
         # Anti-windup per il termine integrale (evita che esploda se ci incastriamo)
-        if self.integral_error > 50.0: self.integral_error = 50.0
-        if self.integral_error < -50.0: self.integral_error = -50.0
+        if self.integral_error > self.antiwindup: self.integral_error = self.antiwindup
+        if self.integral_error < - self.antiwindup: self.integral_error = - self.antiwindup
+
 
         # Equazione del PID completa
         u_y = (self.kp * e) + (self.ki * self.integral_error) + (self.kd * derivative)
@@ -100,7 +105,7 @@ class ControlNode(Node):
         omega = u_y / self.b
 
         # Limitiamo la velocità di rotazione massima per non farlo impazzire
-        if omega > 1.5: omega = 1.5
+        if omega > 1.5: omega = 1.5 #omega_max
         if omega < -1.5: omega = -1.5
 
         # Pubblichiamo i comandi ai motori
