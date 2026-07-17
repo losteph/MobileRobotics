@@ -10,13 +10,14 @@ from launch_ros.parameter_descriptions import ParameterValue
 def generate_launch_description():
     pkg_autonomous_nav = get_package_share_directory('autonomous_nav')
 
-    # Percorsi dei file
+    # 1. Percorsi dei file
     world_file = os.path.join(pkg_autonomous_nav, 'worlds', 'track.sdf')
-    urdf_file = os.path.join(pkg_autonomous_nav, 'urdf', 'robot.urdf')
+    urdf_file = os.path.join(pkg_autonomous_nav, 'urdf', 'robot.xacro')
 
-    robot_desc = ParameterValue(Command(['xacro ', urdf_file]), value_type=str)     # (xacro per convertire il file in stringa XML)
+    # Usa xacro per convertire il file in stringa XML
+    robot_desc = ParameterValue(Command(['xacro ', urdf_file]), value_type=str)
 
-    # Avviamo Gazebo con la mappa
+    # 2. Avvia Gazebo con la mappa
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')
@@ -24,21 +25,21 @@ def generate_launch_description():
         launch_arguments={'gz_args': f'-r {world_file}'}.items()
     )
 
-    # Nodo Robot State Publisher (Serve a RViz per capire la forma del robot)
+    # 3. Nodo Robot State Publisher (Serve a RViz per capire la forma del robot)
     rsp_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         parameters=[{'robot_description': robot_desc}]
     )
 
-    # Spawn del robot in Gazebo (Legge dal topic ufficiale)
+    # 4. Inserisce il robot in Gazebo (Legge dal topic ufficiale)
     spawn_node = Node(
         package='ros_gz_sim',
         executable='create',
         arguments=['-topic', 'robot_description', '-name', 'my_custom_bot', '-x', '2.0', '-y', '0.75', '-z', '0.2'],
         output='screen'
     )
-    # Ponte  (comunicazione tra i topic di ros2 e Gazebo)
+    # 5. Il Ponte Magico (Fa comunicare i topic di ROS 2 con Gazebo)
     bridge_node = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',

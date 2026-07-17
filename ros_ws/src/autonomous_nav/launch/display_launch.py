@@ -5,10 +5,13 @@ from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def generate_launch_description():
+    # 1. Trova in automatico dove si trova il TUO pacchetto
     my_pkg_path = get_package_share_directory('autonomous_nav')
     
-    my_urdf_file = os.path.join(my_pkg_path, 'urdf', 'robot.urdf')
+    # 2. Punta direttamente al tuo file URDF
+    my_urdf_file = os.path.join(my_pkg_path, 'urdf', 'robot.xacro')
     
+    # 3. Usa il tool ufficiale di ROS per far apparire RViz e gli slider
     urdf_tutorial_path = get_package_share_directory('urdf_tutorial')
     
     display_tool = IncludeLaunchDescription(

@@ -8,14 +8,14 @@ from launch_ros.actions import Node
 def generate_launch_description():
     pkg_autonomous_nav = get_package_share_directory('autonomous_nav')
 
-    # Chiamata al file di simulazione base (Mappa + Robot + Bridge)
+    # 1. Chiama il file di simulazione base (Mappa + Robot + Bridge)
     simulation_base = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_autonomous_nav, 'launch', 'simulation_launch.py')
         )
     )
 
-    # Avviamento del Nodo di Percezione
+    # 2. Avvia il Nodo di Percezione
     perception_node = Node(
         package='autonomous_nav',
         executable='perception',
@@ -23,7 +23,7 @@ def generate_launch_description():
         output='screen'
     )
 
-    # Avviamento del Nodo di Controllo
+    # 3. Avvia il Nodo di Controllo
     control_node = Node(
         package='autonomous_nav',
         executable='controller',
