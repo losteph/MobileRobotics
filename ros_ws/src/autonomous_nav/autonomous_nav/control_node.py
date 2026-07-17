@@ -19,8 +19,8 @@ class ControlNode(Node):
 
         
         self.kp = 0.4      # Guadagno Proporzionale (quanto sterza bruscamente, reattività)
-        self.ki = 0.05      # Guadagno Integrale (correzione di piccoli errori a regime)
-        self.kd = 0.2      # Guadagno Derivativo (smorzamento per evitare effetto zig-zag)
+        self.ki = 0.0      # Guadagno Integrale (correzione di piccoli errori a regime)
+        self.kd = 0.07      # Guadagno Derivativo (smorzamento per evitare effetto zig-zag)
         
 
         # Memoria per il calcolo Integrale e Derivativo
