@@ -51,7 +51,7 @@ Una volta dentro il container Docker dobbiamo compilare i pacchetti del progetto
 * `ros2 launch autonomous_nav display_launch.py` Per il debugging visivo del robot (apre rviz): Apre il visualizzatore 3D per controllare l'URDF del robot e il raggio del LiDAR senza simulare la gravità o la fisica.
 * `ros2 launch autonomous_nav simulation_launch.py` Apre la mappa 1 gazebo e posiziona il robot allo start, ma sta fermo, si può guidare manualmente aprendo `./exec.sh` su un altro terminale (fare sempre il `source install/setup.bash`) e digitando poi `ros2 run teleop_twist_keyboard teleop_twist_keyboard` (con la "i" si va avanti, con "k" si frena, con la "u" gira a sinistra andando avanti, con "j" gira sul posto a sinistra, con "o" gira a destra andando avanti, con "l" gira a destra sul posto).
 * `ros2 launch autonomous_nav new_launch.py` Apre la mappa 2 gazebo e posiziona il robot in attesa di comandi manuali.
-* * `ros2 launch autonomous_nav autonomous_launch.py` Avvia la navigazione autonoma sulla Mappa 1.
+* `ros2 launch autonomous_nav autonomous_launch.py` Avvia la navigazione autonoma sulla Mappa 1.
 * `ros2 launch autonomous_nav complete_launch.py` Avvia la navigazione autonoma sulla Mappa 2.
 
 comandi utili per Debug:
