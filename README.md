@@ -13,6 +13,8 @@ Il progetto esclude intenzionalmente algoritmi di navigazione globale (come SLAM
 Agisce come l'occhio del robot. Si iscrive al topic `/scan` del LiDAR (con un field of view frontale di 180°). Il nodo estrae due metriche fondamentali:
 * **Distanza Frontale**.
 * **Distanze Laterali**.
+
+
 I dati vengono pubblicati verso il controllore tramite un'interfaccia tipizzata personalizzata (`autonomous_nav_interfaces/msg/PerceptionData`).
 
 ### 2. Nodo di Controllo (`control_node.py`)
